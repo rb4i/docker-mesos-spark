@@ -1,0 +1,17 @@
+master:
+  image: "mesosphere/mesos-master:0.22.1-1.0.ubuntu1404"
+  ports:
+    - "4040:4040"
+    - "5050:5050"
+
+slave:
+  image: "mesosphere/mesos-slave:0.22.1-1.0.ubuntu1404"
+  links:
+    - "master"
+  environment:
+    MESOS_MASTER: "master:5050"
+
+driver:
+  build: "mesos-executor"
+  links:
+    - "master"
